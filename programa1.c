@@ -11,25 +11,34 @@ int main(int argc, char **argv){
 	char cadenaCode[30]="mensaje";
 	scanf("%s", cadenaCode);
 	printf("Ingrese la clave numerica: \n");
-	int num=0;
+	int num;
 	scanf("%d", &num);
-	
-	printf("Mensaje cifrado: %s \n", cifrar(cadenaCode,num));
+	printf("almenos no es el scan");
+	char* mensajeCifrado;
+	//mensajeCifrado=cifrar(cadenaCode,num);
+	printf("bien");
+	//strcpy(mensajeCifrado,cifrar(cadenaCode,num));
+	//printf("Mensaje cifrado: %s \n", mensajeCifrado);
 
 	return 0;
 }
 
 char* cifrar(char cadena[30], int n){
-	char* cifrado=malloc(sizeof(char)*30);
-        char alfabeto[26]="abcdefghijklmnopqrstuvwxyz";
+	printf("empezamos bien");
+	char* cifradoFinal=malloc(sizeof(char)*30);
+        char cifrado[30];
+	strcpy(cifrado,cadena);
+	char alfabeto[26]="abcdefghijklmnopqrstuvwxyz";
         int a=(int)strlen(cadena);
 
+	printf("hasta aqui bien");
 	for (int i=0;a;i++){
 		int b=buscar(cadena[i],alfabeto);
 		b=(b+n)%26;
                 cifrado[i]=alfabeto[b];
 	}
-	return cifrado;
+	strcpy(cifradoFinal,cifrado);
+	return (char *)cifradoFinal;
 }
 
 int buscar(char a, char texto[30]){
