@@ -9,6 +9,14 @@ int buscar(char a, char texto[30]);
 int verificar(char letra);
 
 int main(int argc, char **argv){
+	char* porConsola;
+	porConsola=(char *)argv[2];
+	int otro=(int)argv[1];
+	if (porConsola!=""){
+               char* retorno=cifrar(porConsola,otro);
+		printf("Mensaje cifrado: %s \n",retorno);
+        }
+	
 	printf("Cifrado ciclico\n");
 	printf("Ingrese el mensaje a cifrar: \n");
 	char cadenaCode[30];
