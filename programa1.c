@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 char* cifrar(char cadena[30], int n);
 int buscar(char a, char texto[30]);
@@ -27,9 +28,13 @@ char* cifrar(char cadena[30], int n){
 	char alfabeto[26]="abcdefghijklmnopqrstuvwxyz";
         int a=(int)strlen(cadena);
 	for (int i=0;i<a;i++){
+		printf("%s \n",cifrado);
 		int b=buscar(cadena[i],alfabeto);
-		b=(b+n)%26;
-                cifrado[i]=alfabeto[b];
+		printf("%d \n",b);
+		if (b!=-1) {
+			b=(b+n)%26;
+                	cifrado[i]=alfabeto[b];
+		}
 	}
 	strcpy(cifradoFinal,cifrado);
 	return (char *)cifradoFinal;
@@ -42,6 +47,9 @@ int buscar(char a, char texto[30]){
 			indice=i;
 			break;
 		}
+	}
+	if (indice>25){
+		indice=-1;
 	}
 	return indice;
 }
