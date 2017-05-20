@@ -10,7 +10,7 @@ int main(int argc, char **argv){
 	printf("Cifrado ciclico\n");
 	printf("Ingrese el mensaje a cifrar: \n");
 	char cadenaCode[30];
-	scanf("%s", cadenaCode);
+	scanf("%[a-z 0-9!#$%&\"\\/()={}]", cadenaCode);
 	printf("Ingrese la clave numerica: \n");
 	int num;
 	scanf("%d", &num);
@@ -28,9 +28,7 @@ char* cifrar(char cadena[30], int n){
 	char alfabeto[26]="abcdefghijklmnopqrstuvwxyz";
         int a=(int)strlen(cadena);
 	for (int i=0;i<a;i++){
-		printf("%s \n",cifrado);
 		int b=buscar(cadena[i],alfabeto);
-		printf("%d \n",b);
 		if (b!=-1) {
 			b=(b+n)%26;
                 	cifrado[i]=alfabeto[b];
