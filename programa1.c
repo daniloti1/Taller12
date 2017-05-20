@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-char cifrar(char cadena[30], int n);
+char* cifrar(char cadena[30], int n);
 int buscar(char a, char texto[30]);
 
 int main(int argc, char **argv){
@@ -18,12 +19,15 @@ int main(int argc, char **argv){
 	return 0;
 }
 
-char cifrar(char cadena[30], int n){
-	char cifrado[30]="";
+char* cifrar(char cadena[30], int n){
+	char* cifrado=malloc(sizeof(char)*30);
         char alfabeto[26]="abcdefghijklmnopqrstuvwxyz";
         int a=(int)strlen(cadena);
+
 	for (int i=0;a;i++){
-                cifrado[i]=alfabeto[(buscar(cadena[i],alfabeto)+n)%26];
+		int b=buscar(cadena[i],alfabeto);
+		b=(b+n)%26;
+                cifrado[i]=alfabeto[b];
 	}
 	return cifrado;
 }
