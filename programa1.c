@@ -9,6 +9,6 @@ int main(int argc, char **argv){
 	int i;
 	scanf("%d", &i);
 	
-	printf("Mensaje cifrado: ");
+	printf("Mensaje cifrado: $cadena");
 	return 0;
 }
