@@ -14,10 +14,10 @@ int main(int argc, char **argv){
 	porConsola=(char *)argv[2];
 	char* otro1=argv[1];
 	int otro=0;
-	for (int j=0;j<strlen(otro1);j++){
-		otro+=(otro1[j]-'0')*(pow(10,(strlen(otro1)-1-j)));
-	}
 	if (argc==3){
+		for (int j=0;j<strlen(otro1);j++){
+                	otro+=(otro1[j]-'0')*(pow(10,(strlen(otro1)-1-j)));
+        	}
                 char* retorno=cifrar(porConsola,otro);
 		printf("Mensaje cifrado: %s \n",retorno);
 		return 0;
