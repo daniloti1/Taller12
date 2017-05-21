@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <math.h>
 
 char* cifrar(char cadena[30], int n);
 int buscar(char a, char texto[30]);
@@ -11,12 +12,16 @@ int verificar(char letra);
 int main(int argc, char **argv){
 	char* porConsola;
 	porConsola=(char *)argv[2];
-	int otro=(int)argv[1];
-	if (porConsola!=""){
-               char* retorno=cifrar(porConsola,otro);
+	char* otro1=argv[1];
+	int otro=0;
+	for (int j=0;j<strlen(otro1);j++){
+		otro+=(otro1[j]-'0')*(pow(10,(strlen(otro1)-1-j)));
+	}
+	if (argc==3){
+                char* retorno=cifrar(porConsola,otro);
 		printf("Mensaje cifrado: %s \n",retorno);
+		return 0;
         }
-	
 	printf("Cifrado ciclico\n");
 	printf("Ingrese el mensaje a cifrar: \n");
 	char cadenaCode[30];
