@@ -36,8 +36,6 @@ int main(int argc, char **argv){
 	char* mensajeCifrado;
 	mensajeCifrado=cifrar(cadenaCode,num);
 	printf("Mensaje cifrado: %s \n", mensajeCifrado);
-	
-	
 
 	printf("Mensaje cifrado en Morse: ");
 	morse(cadenaCode);
@@ -94,14 +92,18 @@ int verificar(char letra){
 void morse(char mensaje[TAMANO]){
 	char alfabetoMorse[36][5]={".-","_...","_._.","_..",".",".._.","__.","....","..",".___","_._","._..","__","_.","___",".__.","__._","._.","...","_",".._","..._",".__","_.._","_.__","__..","_____",".____","..___","...__","...._",".....","_....","__...","___..","____."};
 	char auxiliar[TAMANO]={0};
-	
-	
 	for (int i=0;i<strlen(mensaje);i++){
 		strncpy(auxiliar,mensaje,TAMANO);
-		
 		int indice=(int)auxiliar[i];
-		//if (verificar())
-		indice-=97;
+		if (indice>=65 && indice<=90){
+			indice-=65;
+		}
+		else if (indice>=97 && indice<=122){
+			indice-=97;
+		}
+		else{
+			indice-=22;
+		}
 		if (mensaje[i]==32){
 			printf("/ ");
 		}
@@ -109,6 +111,5 @@ void morse(char mensaje[TAMANO]){
 			printf("%s ",alfabetoMorse[indice]);
 		}
 	}
-	
 	printf("\n");
 }
