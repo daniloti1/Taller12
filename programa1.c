@@ -27,13 +27,18 @@ int main(int argc, char **argv){
 	printf("Cifrado ciclico\n");
 	printf("Ingrese el mensaje a cifrar: \n");
 	char cadenaCode[TAMANO];
-	scanf("%[a-z A-Z0-9.,@_|°!#$%&\"\\/()={}]", cadenaCode);
+	scanf("%[a-z A-Z0-9.,@_|°!#$%&\"\\/()*={}]", cadenaCode);
 	printf("Ingrese la clave numerica: \n");
 	int num;
 	scanf("%d", &num);
 	char* mensajeCifrado;
 	mensajeCifrado=cifrar(cadenaCode,num);
 	printf("Mensaje cifrado: %s \n", mensajeCifrado);
+	
+	
+
+	printf("Mensaje cifrado en Morse: ");
+	morse(cadenaCode);
 
 	return 0;
 }
@@ -85,6 +90,17 @@ int verificar(char letra){
 	return -1;
 }
 void morse(char mensaje[TAMANO]){
-	char codigoMorse[TAMANO];
+	char alfabetoMorse[36][5]={".-","_...","_._.","_..",".",".._.","__.","....","..",".___","_._","._..","__","_.","___",".__.","__._","._.","...","_",".._","..._",".__","_.._","_.__","__..","_____",".____","..___","...__","...._",".....","_....","__...","___..","____."};
+
 	
+	
+	for (int i=0;i<strlen(mensaje);i++){
+		int indice=(int)mensaje[i];
+		indice-=97;
+		
+		printf("%s ",alfabetoMorse[indice]);
+	
+	}
+	
+	printf("\n");
 }
