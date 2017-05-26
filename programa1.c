@@ -93,15 +93,21 @@ int verificar(char letra){
 }
 void morse(char mensaje[TAMANO]){
 	char alfabetoMorse[36][5]={".-","_...","_._.","_..",".",".._.","__.","....","..",".___","_._","._..","__","_.","___",".__.","__._","._.","...","_",".._","..._",".__","_.._","_.__","__..","_____",".____","..___","...__","...._",".....","_....","__...","___..","____."};
-
+	char auxiliar[TAMANO]={0};
 	
 	
 	for (int i=0;i<strlen(mensaje);i++){
-		int indice=(int)mensaje[i];
-		indice-=97;
+		strncpy(auxiliar,mensaje,TAMANO);
 		
-		printf("%s ",alfabetoMorse[indice]);
-	
+		int indice=(int)auxiliar[i];
+		//if (verificar())
+		indice-=97;
+		if (mensaje[i]==32){
+			printf("/ ");
+		}
+		else {
+			printf("%s ",alfabetoMorse[indice]);
+		}
 	}
 	
 	printf("\n");
