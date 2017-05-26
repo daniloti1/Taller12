@@ -23,7 +23,7 @@ int main(int argc, char **argv){
                 char* retorno=cifrar(porConsola,otro);
 		printf("Mensaje cifrado: %s \n",retorno);
 		printf("Mensaje cifrado en Morse: ");
-		morse(porConsola);
+		morse(retorno);
 		return 0;
         }
 	printf("Cifrado ciclico\n");
@@ -38,7 +38,7 @@ int main(int argc, char **argv){
 	printf("Mensaje cifrado: %s \n", mensajeCifrado);
 
 	printf("Mensaje cifrado en Morse: ");
-	morse(cadenaCode);
+	morse(mensajeCifrado);
 
 	return 0;
 }
