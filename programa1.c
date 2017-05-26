@@ -4,10 +4,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
+#define TAMANO 1024
 
-char* cifrar(char cadena[30], int n);
-int buscar(char a, char texto[30]);
+char* cifrar(char cadena[TAMANO], int n);
+int buscar(char a, char texto[TAMANO]);
 int verificar(char letra);
+void morse(char codigo[TAMANO]);
 
 int main(int argc, char **argv){
 	char* porConsola;
@@ -24,7 +26,7 @@ int main(int argc, char **argv){
         }
 	printf("Cifrado ciclico\n");
 	printf("Ingrese el mensaje a cifrar: \n");
-	char cadenaCode[30];
+	char cadenaCode[TAMANO];
 	scanf("%[a-z A-Z0-9.,@_|°!#$%&\"\\/()={}]", cadenaCode);
 	printf("Ingrese la clave numerica: \n");
 	int num;
@@ -36,9 +38,9 @@ int main(int argc, char **argv){
 	return 0;
 }
 
-char* cifrar(char cadena[30], int n){
-	char* cifradoFinal=malloc(sizeof(char)*30);
-        char cifrado[30];
+char* cifrar(char cadena[TAMANO], int n){
+	char* cifradoFinal=malloc(sizeof(char)*TAMANO);
+        char cifrado[TAMANO];
 	strcpy(cifrado,cadena);
 	char alfabeto[26]="abcdefghijklmnopqrstuvwxyz";
 	char alfabetoM[26]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -59,7 +61,7 @@ char* cifrar(char cadena[30], int n){
 	return (char *)cifradoFinal;
 }
 
-int buscar(char a, char texto[30]){
+int buscar(char a, char texto[TAMANO]){
 	int indice=-1;
 	for (int i=0;i<strlen(texto);i++){
 		if (a==texto[i]){
@@ -81,4 +83,8 @@ int verificar(char letra){
 		return 1;
 	}
 	return -1;
+}
+void morse(char mensaje[TAMANO]){
+	char codigoMorse[TAMANO];
+	
 }
