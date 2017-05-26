@@ -22,6 +22,8 @@ int main(int argc, char **argv){
         	}
                 char* retorno=cifrar(porConsola,otro);
 		printf("Mensaje cifrado: %s \n",retorno);
+		printf("Mensaje cifrado en Morse: ");
+		morse(porConsola);
 		return 0;
         }
 	printf("Cifrado ciclico\n");
