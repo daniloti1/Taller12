@@ -29,7 +29,7 @@ int main(){
 	desglosar("2017-06-06");
 	int arreglo[5]={1,4,58,36,2};
 	int* arr=&arreglo[0];	
-	busqueda(arr,2,5);
+	printf("El retorno: %x\n",busqueda(arr,2,5));
 	int a=2;int b=3;
 	intercambiar(a,b);
 	return 0;
