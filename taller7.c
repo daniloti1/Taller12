@@ -87,20 +87,19 @@ int anadirHijo(Persona *padre, Persona *hijo){
 void mostrarInfoPersona(Persona *persona){
 	if(persona != NULL){
 		printf("Nombre: %s\nPeso: %d kg\nEdad: %d\n",persona->nombre, persona->peso, persona->edad);
-		if(persona->hijos == NULL){
+		if(persona->hijos->siguiente == NULL){
 			printf("Hijos: esta persona no tiene hijos\n");
 			return;
 		}
 		else{
-			ListaHijos *lista_hijos = persona->hijos->siguiente;
+			ListaHijos *lista_hijos = persona->hijos;//->siguiente;
 			printf("Los hijos de %s son:\n", persona->nombre);
-
 			while(lista_hijos != NULL){
 				//Persona *per=(Persona*) malloc(sizeof(Persona*));	
-				//printf("- %s\n", lista_hijos->siguiente->per->nombre);	
-				//lista_hijos = lista_hijos->siguiente->per->hijos;
-				printf("- %s\n", lista_hijos->per->nombre);	
-				lista_hijos = lista_hijos->siguiente;	
+				printf("- %s\n", lista_hijos->siguiente->per->nombre);	
+				lista_hijos = persona->hijos->siguiente->siguiente;
+				//printf("- %s\n", lista_hijos->per->nombre);	
+				//lista_hijos = lista_hijos->siguiente;	
 			}
 		}
 	}
@@ -144,8 +143,6 @@ int main(void){
 	
 
 }
-
-
 
 
 
