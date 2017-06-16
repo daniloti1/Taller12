@@ -52,11 +52,15 @@ int anadirHijo(Persona *padre, Persona *hijo){
 	if(lista_hijos == NULL){
 		ListaHijos *lista = (ListaHijos *)malloc(sizeof(ListaHijos));
 		if(lista == NULL){
+			free(lista);
+			free(lista_hijos);
 			return -1;		
 		}
 		lista->per = hijo;
 		lista->siguiente = NULL;
 		padre->hijos = lista;
+		free(lista);
+		free(lista_hijos);
 		return 0;
 	}
 
@@ -72,15 +76,18 @@ int anadirHijo(Persona *padre, Persona *hijo){
 					
 		ListaHijos *nuevo = (ListaHijos *)malloc(sizeof(ListaHijos));
 		if(nuevo == NULL){
+			free(lista_hijos);
 			return -1;		
 		}
 		nuevo->per = hijo;
 		nuevo->siguiente = NULL;
 		lista_hijos->siguiente = nuevo;
 		padre->hijos = lista_hijos;
+		
 		return 0;	
 		
 	}
+	free(lista_hijos);
 	return -1;
 }
 
@@ -95,9 +102,11 @@ void mostrarInfoPersona(Persona *persona){
 			ListaHijos *lista_hijos = persona->hijos;//->siguiente;
 			printf("Los hijos de %s son:\n", persona->nombre);
 			while(lista_hijos != NULL){
-				//Persona *per=(Persona*) malloc(sizeof(Persona*));	
-				printf("- %s\n", lista_hijos->siguiente->per->nombre);	
-				lista_hijos = persona->hijos->siguiente->siguiente;
+				//Persona *per=(Persona*) malloc(sizeof(Persona*));
+				if(lista_hijos->per != NULL){	 
+					printf("- %s\n", lista_hijos->per->nombre);
+				}	
+				lista_hijos = lista_hijos->siguiente;
 				//printf("- %s\n", lista_hijos->per->nombre);	
 				//lista_hijos = lista_hijos->siguiente;	
 			}
@@ -108,22 +117,19 @@ void mostrarInfoPersona(Persona *persona){
 
 int main(void){
 
-	Persona *listaPersona[TAMANO];
+	Persona *listaPersona[TAMANO]={0};
 
 	int i = 0;
 
-	for(i = 0; i <= TAMANO; i++){			
+	for(i = 0; i < TAMANO; i++){			
 
 		int edad = edadMin + rand() / (RAND_MAX / (edadMax - edadMin + 1) + 1);
 		int peso = pesoMin + rand() / (RAND_MAX / (pesoMax - pesoMin + 1) + 1);
 
-		Persona* p = (Persona*) malloc(sizeof(Persona*));
-		p = crearPersona(nombres[i],  edad, peso);
-		listaPersona[i] = p;
-		free(p);
+		listaPersona[i] = crearPersona(nombres[i],  edad, peso);
+		
 
 	}
-
 
 	anadirHijo(listaPersona[0], listaPersona[1]);
 	anadirHijo(listaPersona[3], listaPersona[2]);
@@ -143,6 +149,7 @@ int main(void){
 	
 
 }
+
 
 
 
