@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-
 
 #define TAMANO 7
 #define edadMin 10 
@@ -29,7 +25,7 @@ typedef struct listaHijosTDA{
 
 
 Persona *crearPersona(char *nombre, int edad, int peso){
-	Persona *nuevo = (Persona*) malloc(sizeof(Persona*));
+	Persona *nuevo = (Persona*) malloc(sizeof(Persona*));//No se habia inicializado correctamente el puntero y el error era Segmentation fault
 
 	nuevo->nombre = nombre;
 	nuevo->edad = edad;
@@ -37,7 +33,7 @@ Persona *crearPersona(char *nombre, int edad, int peso){
 
 	
 
-	nuevo->hijos = (ListaHijos*) malloc(sizeof(ListaHijos*));
+	nuevo->hijos = (ListaHijos*) malloc(sizeof(ListaHijos*));//No se habia inicializado correctamente el puntero y el error era Segmentation fault
 
 	return nuevo;					
 }
@@ -45,7 +41,7 @@ Persona *crearPersona(char *nombre, int edad, int peso){
 
 int anadirHijo(Persona *padre, Persona *hijo){
 	
-	ListaHijos *lista_hijos = (ListaHijos*)malloc(sizeof(ListaHijos));
+	ListaHijos *lista_hijos = (ListaHijos*)malloc(sizeof(ListaHijos));//No se habia inicializado correctamente el puntero previa la asignacion y el error era Segmentation fault
 	lista_hijos = padre->hijos;
 
 
@@ -59,6 +55,7 @@ int anadirHijo(Persona *padre, Persona *hijo){
 		lista->per = hijo;
 		lista->siguiente = NULL;
 		padre->hijos = lista;
+		//Se libera ese espacio con free
 		free(lista);
 		free(lista_hijos);
 		return 0;
@@ -80,8 +77,9 @@ int anadirHijo(Persona *padre, Persona *hijo){
 			return -1;		
 		}
 		nuevo->per = hijo;
-		nuevo->siguiente = NULL;
+		nuevo->siguiente = NULL;//El siguiente se le asignaba otra vez la lista al momento de imprimir se creaba un bucle
 		lista_hijos->siguiente = nuevo;
+		//Faltaba la asignacion nuevamente a padre la asignacion de la lista_hijos
 		padre->hijos = lista_hijos;
 		
 		return 0;	
@@ -94,21 +92,18 @@ int anadirHijo(Persona *padre, Persona *hijo){
 void mostrarInfoPersona(Persona *persona){
 	if(persona != NULL){
 		printf("Nombre: %s\nPeso: %d kg\nEdad: %d\n",persona->nombre, persona->peso, persona->edad);
-		if(persona->hijos->siguiente == NULL){
+		if(persona->hijos->siguiente == NULL){//Se valida que el primer hijo no sea null
 			printf("Hijos: esta persona no tiene hijos\n");
 			return;
 		}
 		else{
-			ListaHijos *lista_hijos = persona->hijos;//->siguiente;
+			ListaHijos *lista_hijos = persona->hijos;
 			printf("Los hijos de %s son:\n", persona->nombre);
-			while(lista_hijos != NULL){
-				//Persona *per=(Persona*) malloc(sizeof(Persona*));
+			while(lista_hijos != NULL){//Se agrego un condicional para validar que la persona no sea Null e imprimir caso contrario se modifica la lista para su siguiente hijo
 				if(lista_hijos->per != NULL){	 
 					printf("- %s\n", lista_hijos->per->nombre);
 				}	
 				lista_hijos = lista_hijos->siguiente;
-				//printf("- %s\n", lista_hijos->per->nombre);	
-				//lista_hijos = lista_hijos->siguiente;	
 			}
 		}
 	}
@@ -121,12 +116,12 @@ int main(void){
 
 	int i = 0;
 
-	for(i = 0; i < TAMANO; i++){			
+	for(i = 0; i < TAMANO; i++){//lanzaba el stackkmashing y no imprimia la ultima persona		
 
 		int edad = edadMin + rand() / (RAND_MAX / (edadMax - edadMin + 1) + 1);
 		int peso = pesoMin + rand() / (RAND_MAX / (pesoMax - pesoMin + 1) + 1);
 
-		listaPersona[i] = crearPersona(nombres[i],  edad, peso);
+		listaPersona[i] = crearPersona(nombres[i],  edad, peso);//Faltaba la asignacion a la listaPersona
 		
 
 	}
@@ -149,10 +144,6 @@ int main(void){
 	
 
 }
-
-
-
-
 
 
 
