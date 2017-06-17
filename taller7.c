@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 
 #define TAMANO 7
 #define edadMin 10 
