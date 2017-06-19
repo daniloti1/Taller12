@@ -47,12 +47,14 @@ void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
 	elem->siguiente = NULL;
 	elem->anterior = NULL;
 	lista->numeroElementos -= 1;
-	free(elem);
+	lista->ancla->objeto = &lista->numeroElementos;
+	//free(elem); de esta liena no estoy seguro
 }
 
 void Lista_SacarTodos(ListaEnlazada *lista){
 	lista->ancla-siguiente = NULL;
 	lista->numeroElementos = 0;
+	lista->ancla->objeto = &lista->numeroElementos;
 }
 
 int Lista_InsertarDespues(ListaEnlazada *lista, void *objeto, ElementoLista *elemento){
@@ -68,6 +70,7 @@ int Lista_InsertarDespues(ListaEnlazada *lista, void *objeto, ElementoLista *ele
 	elem-siguiente->anterior = elemento;
 	elem-siguiente = elemento;
 	lista->numeroElementos += 1;
+	lista->ancla->objeto = &lista->numeroElementos;
 	return TRUE;	
 }
 
@@ -84,6 +87,7 @@ int Lista_InsertarAntes(ListaEnlazada *lista, void *objeto, ElementoLista *eleme
 	elem->anterior->siguiente = elemento;
 	elem->anterior = elemento;
 	lista->numeroElementos += 1;
+	lista->ancla->objeto = &lista->numeroElementos;
 	return TRUE;
 
 }
