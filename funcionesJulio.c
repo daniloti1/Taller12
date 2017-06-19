@@ -1,4 +1,6 @@
-extern int Lista_Vacia(ListaEnlazada *lista);
+extern int Lista_Vacia(ListaEnlazada *lista){
+	
+}
 extern int Lista_Conteo(ListaEnlazada *lista);
 
 
