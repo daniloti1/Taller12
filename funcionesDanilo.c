@@ -91,3 +91,19 @@ int Lista_InsertarAntes(ListaEnlazada *lista, void *objeto, ElementoLista *eleme
 	return TRUE;
 
 }
+
+ElementoLista *Lista_Siguiente(ListaEnlazada *lista, ElementoLista *elemento){	
+	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
+	if (elem == NULL) {
+		return NULL;
+	}
+	return elem->siguiente;
+}
+
+ElementoLista *Lista_Anterior(ListaEnlazada *lista, ElementoLista *elemento){
+	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
+	if (elem == NULL) {
+		return NULL;
+	}
+	return elem->anterior;
+}
