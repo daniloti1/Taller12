@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 	int baudrate = 9600;  // default
 
 	fd = serialport_init("/dev/ttyACM0", baudrate);
+	char * archivo = "/dev/ttyACM0";
+	
 
 	if( fd==-1 )
 	{
@@ -28,7 +30,19 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+	while(1) {
+
+		char com = 't';
 	
+		write(fd, &com, 1);
+	
+		int* temperatura;
+
+		read(fd,temperatura,sizeof(int));
+		printf("Temperatura: %d\n",*temperatura);
+		usleep(5000000);
+
+	}
 	close( fd );
 	return 0;	
 }
