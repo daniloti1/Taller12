@@ -29,20 +29,32 @@ int main(int argc, char *argv[])
 		error("couldn't open port");
 		return -1;
 	}
-
-	while(1) {
-
+	int contador = 0;
+	float * lista = (float*) malloc(sizeof(float));
+	while(contador < 12) {
+	
 		char com = 't';
-	
+		if (contador%2 == 0) {
+			com = 'h';
+		}
 		write(fd, &com, 1);
-	
 		int* temperatura;
 
 		read(fd,temperatura,sizeof(int));
-		printf("Temperatura: %d\n",*temperatura);
-		usleep(5000000);
+		if (contador%2 == 0) {
+			printf("Humedad: %d\n",*temperatura);
+			
+		} else {
+			printf("Temperatura: %d\n",*temperatura);
+		}
+		lista[contador] = (float)*temperatura;
+		contador+=1;
+		usleep(2000000);
 
 	}
+	float resultado = calculateSD(lista);
+	printf("%f",resultado);
+
 	close( fd );
 	return 0;	
 }
