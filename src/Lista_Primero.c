@@ -6,7 +6,7 @@ ElementoLista *Lista_Primero(ListaEnlazada *lista){
 		return NULL;
 	}else{
 		ElementoLista *elemento;
-		elemento=lista->ancla->siguiente;
+		elemento=lista->ancla.siguiente;
 		return elemento;
 	}
 }
