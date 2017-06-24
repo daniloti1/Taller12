@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "miLista.h"
 
 int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
-	ElementoLista *elemento;	
+	ElementoLista *elemento = (ElementoLista*) malloc(sizeof(ElementoLista));	
 	if(lista->numeroElementos==0){	
 		elemento->objeto=objeto;
 		elemento->siguiente = &lista->ancla;

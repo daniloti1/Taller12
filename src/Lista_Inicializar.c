@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "miLista.h"
 
 int Lista_Inicializar(ListaEnlazada *lista){
@@ -6,7 +7,7 @@ int Lista_Inicializar(ListaEnlazada *lista){
 		return FALSE;
 	}
 	lista->numeroElementos = 0;
-	ElementoLista* inicio;// = (Elementolista*) malloc(sizeof(ElementoLista*)); 
+	ElementoLista* inicio = (ElementoLista*) malloc(sizeof(ElementoLista)); 
 	inicio->objeto = &lista->numeroElementos;
 	inicio->anterior = NULL;
 	inicio->siguiente = NULL;
