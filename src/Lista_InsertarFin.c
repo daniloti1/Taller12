@@ -7,6 +7,8 @@ int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 		elemento->objeto=objeto;
 		elemento->siguiente = lista->ancla.objeto;
 		elemento->anterior = lista->ancla.objeto;
+		elemento->siguiente = &lista->ancla;
+		elemento->anterior = &lista->ancla;
 		lista->ancla.siguiente = elemento;
 		lista->ancla.anterior = elemento;
 		lista->numeroElementos++;
@@ -14,6 +16,8 @@ int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 	}else{
 		elemento->objeto=objeto;
 		elemento->siguiente = lista->ancla.objeto;
+		elemento->anterior = lista->ancla.anterior;
+		elemento->siguiente = &lista->ancla;
 		elemento->anterior = lista->ancla.anterior;
 		lista->ancla.anterior = elemento;
 		lista->numeroElementos++;	
