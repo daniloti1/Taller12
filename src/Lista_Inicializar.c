@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "miLista.h"
 
-int Lista_Inicializar(ListaEnlazada *lista){
+extern int Lista_Inicializar(ListaEnlazada *lista){
 	if (lista->ancla.objeto != NULL) {
 		return FALSE;
 	}

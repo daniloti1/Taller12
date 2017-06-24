@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "miLista.h"
 
-int Lista_InsertarDespues(ListaEnlazada *lista, void *objeto, ElementoLista *elemento){
+extern int Lista_InsertarDespues(ListaEnlazada *lista, void *objeto, ElementoLista *elemento){
 	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
 	if (elem == NULL) {
 		return FALSE;

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "miLista.h"
 
-void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
+extern void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
 	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
-	if (elem == NULL) {
+	if (elemento == NULL) {
 		return;
 	}
 	elem->siguiente->anterior = elem->anterior;
@@ -13,5 +13,6 @@ void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
 	lista->numeroElementos -= 1;
 	lista->ancla.objeto = &lista->numeroElementos;
 	//free(elem); de esta liena no estoy seguro
+	return;
 }
 

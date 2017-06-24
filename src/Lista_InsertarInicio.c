@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "miLista.h"
 
-int Lista_InsertarInicio(ListaEnlazada *lista, void *objeto){
+extern int Lista_InsertarInicio(ListaEnlazada *lista, void *objeto){
 	ElementoLista *elemento = (ElementoLista*) malloc(sizeof(ElementoLista));
 	if(lista->numeroElementos==0){	
 		elemento->objeto=objeto;
