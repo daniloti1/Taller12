@@ -24,6 +24,7 @@ extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 		elemento->anterior = (lista->ancla).anterior;
 		//elemento->siguiente = &lista->ancla;
 		//elemento->anterior = lista->ancla.anterior;
+		lista->ancla.anterior->siguiente = elemento;
 		(lista->ancla).anterior = elemento;
 		lista->numeroElementos++;
 		//free(objeto);
