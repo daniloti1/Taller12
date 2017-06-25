@@ -10,7 +10,7 @@
 
 
 void ImprimirLista(ListaEnlazada *lista, int numeroElementos){
-	printf("IMPRIMIR LISTA	\n");
+
 	if (Lista_Conteo(lista) != numeroElementos){
 		printf("ImprimirLista: Error. Numero de elementos en lista incorrecto\n");
 		exit(-1);
@@ -33,7 +33,6 @@ void LlenarLista(ListaEnlazada *lista, int numeroElementos){
 	long i = 0;
 
 	for (i = 0; i < numeroElementos; i++){
-		//printf("%lu", i);
 		Lista_InsertarFin(lista, (void *)i);
 	}
 }
@@ -64,47 +63,49 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 	int elementos_en_lista;
 
 	printf("BarajarLista: Barajando la lista...\n");
+
 	for (i = 0; i < numeroElementos; i++){
-		printf("For dentro de barajar %d\n",i);		
 		int j = 0;
-		long indiceAleatorio = 0;		
-		elementos_en_lista = numeroElementos - i;		
+		long indiceAleatorio = 0;
+
+		elementos_en_lista = numeroElementos - i;
+
 		/*Obtenemos indice aleatorio*/
 		indiceAleatorio = IndiceAleatorio(elementos_en_lista);
+
 		elem = Lista_Primero(lista);
+
 		assert(elem != NULL);
-		
-		printf("%lu", (long)elem->objeto);
-		printf("\n");
+
 		/*Buscamos un elemento a sacar de la lista*/
-		for (elem = Lista_Primero(lista); elem != NULL; elem = Lista_Siguiente(lista, elem)) {			
+		for (elem = Lista_Primero(lista); elem != NULL; elem = Lista_Siguiente(lista, elem)) {
+
 			if (j == indiceAleatorio) {
 #ifdef IMPRIMIR_LISTA
 				printf("%lu\n", (long)elem->objeto);
 #endif
 				break;
 			}
+
 			j++;
 		}
-	
-		printf("\n");
-		printf("%lu", (long)elem->objeto);
-		printf("\n");
+
 		if (elem == NULL){
 			/*No encontramos el valor (o Buscar esta mal implementada)*/
 			fprintf(stderr, "BarajarLista: Error critico en BarajarLista (linea %d)\n", __LINE__);
 			exit(-1);
 		}
+
 		//Sacamos el elemeno de la lista
 		void *objeto = NULL;
 		objeto = elem->objeto;
 
-		printf("\n");
+
 		Lista_Sacar(lista, elem);
 		free(elem);
 		Lista_InsertarFin(&lista_tmp, objeto);
 	}
-	printf("**Salimos del for\n");
+
 	/*Aqui lista debe estar vacia...*/
 	if (!Lista_Vacia(lista)){
 		/*No encontramos el valor (o Buscar esta mal implementada)*/
@@ -114,10 +115,7 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 
 	/*lista_tmp contiene elementos insertados de manera aleatoria, reinsertamos en lista*/
 	for (elem = Lista_Primero(&lista_tmp); elem != NULL; elem = Lista_Siguiente(&lista_tmp, elem)) {
-		printf("Ingreso al for\n");
 		Lista_InsertarFin(lista, elem->objeto);
-		printf("elem %p\n", elem);
-		printf("elem siguiente %p\n", elem->siguiente);
 	}
 
 	Lista_SacarTodos(&lista_tmp);
@@ -238,7 +236,7 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 	/*Sacamos los eelementos impares*/
 	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){
-		ImprimirLista(listaPar, Lista_Conteo(listaPar));
+
 		if (eliminar){
 			free(aEliminar);
 			eliminar = FALSE;
@@ -252,17 +250,14 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 		long valor = (long)elem->objeto;
 
+
 		if (valor % 2 != 0){
 			Lista_Sacar(listaPar, elem);
 			//Copiamos el puntero para eliminarlo en la siguiente corrida (despues que hayamos encontrado el siguiente.
 			aEliminar = elem;
 			eliminar = TRUE;
 		}
-		printf("elemento %p\n",elem);
-		printf("siguiente %p\n",elem->siguiente);
-		printf("siguiente %p\n",Lista_Siguiente(listaPar, elem));
 	}
-	printf("Salgo del For\n");
 
 	//Eliminamos el ultimo elemento.	
 	if (eliminar){
@@ -272,12 +267,12 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 
 	/*Verificar que solo tengamos pares*/
-//#ifdef IMPRIMIR_LISTA
+#ifdef IMPRIMIR_LISTA
 	ImprimirLista(listaPar, Lista_Conteo(listaPar));
-//#endif
+#endif
 
-	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){		
-		long valor = (long)elem->objeto;	
+	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){
+		long valor = (long)elem->objeto;
 		if (valor % 2 != 0){
 			fprintf(stderr, "CopiarListaPares: Error, se encontro un elemento impar (%lu) en la lista par (linea %d)\n", valor, __LINE__);
 			exit(-1);
@@ -290,7 +285,7 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 
 void IntercambiarElementos(ListaEnlazada *lista, ElementoLista **elemento1, ElementoLista **elemento2){
-	printf("IntercambiarElementos");
+
 	ElementoLista *anteriorElem1 = Lista_Anterior(lista, *elemento1);
 	ElementoLista *anteriorElem2 = Lista_Anterior(lista, *elemento2);
 	ElementoLista *siguienteElem2 = Lista_Siguiente(lista, *elemento2);
@@ -377,10 +372,10 @@ void OrdenarListaAscendente(ListaEnlazada *lista){
 
 	int i = 0;
 
-//#ifdef IMPRIMIR_LISTA
+#ifdef IMPRIMIR_LISTA
 	printf("Lista antes de ordenar:\n");
 	ImprimirLista(lista, Lista_Conteo(lista));
-//#endif
+#endif
 
 	ElementoLista *actual, *siguiente, *minimoActual, *elem;
 	for (i = 0; i < numeroElementos; i++){
@@ -410,11 +405,10 @@ void OrdenarListaAscendente(ListaEnlazada *lista){
 			//printf("Siguiente %lu\n", (long)siguiente->objeto);	
 		}
 
-		siguiente = Lista_Siguiente(lista, actual);
+		//siguiente = Lista_Siguiente(lista, actual);
 		//printf("Siguiente %lu\n", (long)siguiente->objeto);
 
 		int minimo_cambio = FALSE;
-		
 		for (elem = actual; elem != NULL; elem = Lista_Siguiente(lista, elem)){
 
 			long valor_elem = (long)elem->objeto;
@@ -536,22 +530,6 @@ void RealizarPruebas(int numeroElementos)
 
 int main(int argc, char *argv[])
 {
-	printf("Solo para pruebas\n\n");
-	ListaEnlazada* l = (ListaEnlazada*) malloc(sizeof(ListaEnlazada));
-	Lista_Inicializar(l);
-	int* a = (int *) 5;
-	int* b = (int *) 5;
-	Lista_InsertarFin(l,a);
-	//ElementoLista * elem = Lista_Buscar(l,b);
-	printf("Salimos de buscar\n");
-
-	ElementoLista * e = (ElementoLista*) malloc(sizeof(ElementoLista));
-	e->objeto = b;
-	
-	printf("lista vacia antes de sacar %d\n",Lista_Vacia(l));
-	Lista_Sacar(l,e);
-	printf("lista vacia %d\n",Lista_Vacia(l));
-
 
 	if (argc < 2){
 		fprintf(stderr, "Por favor ingrese el numero de elementos como argumento ej.: ./prueba 1234");

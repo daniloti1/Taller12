@@ -1,15 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "miLista.h"
 
 extern int Lista_InsertarAntes(ListaEnlazada *lista, void *objeto, ElementoLista *elemento){
-	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
-	if (elem == NULL) {
+	if (Lista_Buscar(lista, elemento->objeto) == NULL) {
 		return FALSE;
 	}
-	elemento->anterior = elem->anterior;
-	elemento->siguiente = elem;
-	elem->anterior->siguiente = elemento;
-	elem->anterior = elemento;
+	ElementoLista* aInsertar = (ElementoLista*) malloc(sizeof(ElementoLista));
+	aInsertar->objeto = objeto;
+	aInsertar->anterior = elemento->anterior;
+	aInsertar->siguiente = elemento;
+	elemento->anterior->siguiente = aInsertar;
+	elemento->anterior = aInsertar;
 	lista->numeroElementos += 1;
 	lista->ancla.objeto = &lista->numeroElementos;
 	return TRUE;
