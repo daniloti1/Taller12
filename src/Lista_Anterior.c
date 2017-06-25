@@ -2,8 +2,14 @@
 #include "miLista.h"
 
 extern ElementoLista *Lista_Anterior(ListaEnlazada *lista, ElementoLista *elemento){
+	if (elemento == NULL) {
+		return NULL;
+	}
 	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
 	if (elem == NULL) {
+		return NULL;
+	}
+	if (elem->anterior == &lista->ancla) {
 		return NULL;
 	}
 	return elem->anterior;
