@@ -16,6 +16,7 @@ extern int Lista_InsertarInicio(ListaEnlazada *lista, void *objeto){
 		elemento->objeto=objeto;
 		elemento->siguiente = lista->ancla.siguiente;
 		elemento->anterior = lista->ancla.objeto;
+		lista->ancla.siguiente->anterior = elemento;
 		lista->ancla.siguiente = elemento;
 		lista->numeroElementos++;	
 		return TRUE;
