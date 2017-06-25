@@ -238,7 +238,6 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 	/*Sacamos los eelementos impares*/
 	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){
-		printf("--For %p\n",elem);
 		ImprimirLista(listaPar, Lista_Conteo(listaPar));
 		if (eliminar){
 			free(aEliminar);
@@ -252,10 +251,8 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 		}
 
 		long valor = (long)elem->objeto;
-		printf("valor %lu\n",valor);
 
 		if (valor % 2 != 0){
-			printf("elemento a eliminar %p\n",elem);
 			Lista_Sacar(listaPar, elem);
 			//Copiamos el puntero para eliminarlo en la siguiente corrida (despues que hayamos encontrado el siguiente.
 			aEliminar = elem;
@@ -417,6 +414,7 @@ void OrdenarListaAscendente(ListaEnlazada *lista){
 		//printf("Siguiente %lu\n", (long)siguiente->objeto);
 
 		int minimo_cambio = FALSE;
+		
 		for (elem = actual; elem != NULL; elem = Lista_Siguiente(lista, elem)){
 
 			long valor_elem = (long)elem->objeto;

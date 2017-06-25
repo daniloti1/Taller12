@@ -2,7 +2,7 @@
 #include "miLista.h"
 
 extern int Lista_InsertarDespues(ListaEnlazada *lista, void *objeto, ElementoLista *elemento){
-	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
+	ElementoLista* elem = Lista_Buscar(lista, objeto);
 	if (elem == NULL) {
 		return FALSE;
 	}
