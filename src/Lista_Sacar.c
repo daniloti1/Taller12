@@ -11,11 +11,11 @@ extern void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
 	elem->siguiente->anterior = elem->anterior;	
 	elem->anterior->siguiente = elem->siguiente;
 	
-	elem->siguiente = NULL;
+	//elem->siguiente = NULL;
 	elem->anterior = NULL;
 	lista->numeroElementos -= 1;
 	lista->ancla.objeto = &lista->numeroElementos;
-	//free(elem); de esta liena no estoy seguro
+	printf("Terminar sacar\n");
 	return;
 }
 

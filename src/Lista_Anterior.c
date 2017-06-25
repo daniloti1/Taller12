@@ -5,12 +5,11 @@ extern ElementoLista *Lista_Anterior(ListaEnlazada *lista, ElementoLista *elemen
 	if (elemento == NULL) {
 		return NULL;
 	}
-	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
-	if (elem == NULL) {
+	if (elemento->anterior == NULL) {			
 		return NULL;
 	}
-	if (elem->anterior == &lista->ancla) {
+	if (elemento->anterior == &lista->ancla) {
 		return NULL;
 	}
-	return elem->anterior;
+	return elemento->anterior;
 }

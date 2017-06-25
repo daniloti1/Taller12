@@ -5,16 +5,12 @@ extern ElementoLista *Lista_Siguiente(ListaEnlazada *lista, ElementoLista *eleme
 	if (elemento == NULL) {
 		return NULL;
 	}
-	ElementoLista* elem = Lista_Buscar(lista, elemento->objeto);
-	printf("Entro en siguiente \n");
-	printf("%lu\n", (long)elem->objeto);
-	if (elem == NULL) {
+	if (elemento->siguiente == NULL) {			
 		return NULL;
 	}
-	if (elem->siguiente == &lista->ancla) {
+	if (elemento->siguiente == &lista->ancla) {
 		return NULL;
 	}
-	//printf("siguiente");
-	return elem->siguiente;
+	return elemento->siguiente;
 }
 

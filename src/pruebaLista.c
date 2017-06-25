@@ -10,7 +10,7 @@
 
 
 void ImprimirLista(ListaEnlazada *lista, int numeroElementos){
-
+	printf("IMPRIMIR LISTA	\n");
 	if (Lista_Conteo(lista) != numeroElementos){
 		printf("ImprimirLista: Error. Numero de elementos en lista incorrecto\n");
 		exit(-1);
@@ -238,7 +238,8 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 	/*Sacamos los eelementos impares*/
 	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){
-
+		printf("--For %p\n",elem);
+		ImprimirLista(listaPar, Lista_Conteo(listaPar));
 		if (eliminar){
 			free(aEliminar);
 			eliminar = FALSE;
@@ -251,15 +252,20 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 		}
 
 		long valor = (long)elem->objeto;
-
+		printf("valor %lu\n",valor);
 
 		if (valor % 2 != 0){
+			printf("elemento a eliminar %p\n",elem);
 			Lista_Sacar(listaPar, elem);
 			//Copiamos el puntero para eliminarlo en la siguiente corrida (despues que hayamos encontrado el siguiente.
 			aEliminar = elem;
 			eliminar = TRUE;
 		}
+		printf("elemento %p\n",elem);
+		printf("siguiente %p\n",elem->siguiente);
+		printf("siguiente %p\n",Lista_Siguiente(listaPar, elem));
 	}
+	printf("Salgo del For\n");
 
 	//Eliminamos el ultimo elemento.	
 	if (eliminar){
@@ -269,12 +275,12 @@ void CopiarListaPares(ListaEnlazada *lista, ListaEnlazada *listaPar){
 
 
 	/*Verificar que solo tengamos pares*/
-#ifdef IMPRIMIR_LISTA
+//#ifdef IMPRIMIR_LISTA
 	ImprimirLista(listaPar, Lista_Conteo(listaPar));
-#endif
+//#endif
 
-	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){
-		long valor = (long)elem->objeto;
+	for (elem = Lista_Primero(listaPar); elem != NULL; elem = Lista_Siguiente(listaPar, elem)){		
+		long valor = (long)elem->objeto;	
 		if (valor % 2 != 0){
 			fprintf(stderr, "CopiarListaPares: Error, se encontro un elemento impar (%lu) en la lista par (linea %d)\n", valor, __LINE__);
 			exit(-1);
@@ -374,10 +380,10 @@ void OrdenarListaAscendente(ListaEnlazada *lista){
 
 	int i = 0;
 
-#ifdef IMPRIMIR_LISTA
+//#ifdef IMPRIMIR_LISTA
 	printf("Lista antes de ordenar:\n");
 	ImprimirLista(lista, Lista_Conteo(lista));
-#endif
+//#endif
 
 	ElementoLista *actual, *siguiente, *minimoActual, *elem;
 	for (i = 0; i < numeroElementos; i++){
@@ -407,7 +413,7 @@ void OrdenarListaAscendente(ListaEnlazada *lista){
 			//printf("Siguiente %lu\n", (long)siguiente->objeto);	
 		}
 
-		//siguiente = Lista_Siguiente(lista, actual);
+		siguiente = Lista_Siguiente(lista, actual);
 		//printf("Siguiente %lu\n", (long)siguiente->objeto);
 
 		int minimo_cambio = FALSE;
@@ -538,10 +544,15 @@ int main(int argc, char *argv[])
 	int* a = (int *) 5;
 	int* b = (int *) 5;
 	Lista_InsertarFin(l,a);
-	ElementoLista * elem = Lista_Buscar(l,b);
+	//ElementoLista * elem = Lista_Buscar(l,b);
 	printf("Salimos de buscar\n");
-	printf("\n%p\n\n\n", elem);
-	printf("\n%p\n\n\n", elem->objeto);
+
+	ElementoLista * e = (ElementoLista*) malloc(sizeof(ElementoLista));
+	e->objeto = b;
+	
+	printf("lista vacia antes de sacar %d\n",Lista_Vacia(l));
+	Lista_Sacar(l,e);
+	printf("lista vacia %d\n",Lista_Vacia(l));
 
 
 	if (argc < 2){
