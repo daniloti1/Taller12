@@ -12,6 +12,7 @@ extern void Lista_Sacar(ListaEnlazada *lista, ElementoLista *elemento){
 	elem->anterior = NULL;
 	lista->numeroElementos -= 1;
 	lista->ancla.objeto = &lista->numeroElementos;
+	printf("saca");
 	//free(elem); de esta liena no estoy seguro
 	return;
 }

@@ -33,6 +33,7 @@ void LlenarLista(ListaEnlazada *lista, int numeroElementos){
 	long i = 0;
 
 	for (i = 0; i < numeroElementos; i++){
+		//printf("%lu", i);
 		Lista_InsertarFin(lista, (void *)i);
 	}
 }
@@ -61,25 +62,27 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 
 	//Buscar elemento, sacarlo de lista, ponerla en lista_tmp
 	int elementos_en_lista;
-
+	printf("%d",numeroElementos);
 	printf("BarajarLista: Barajando la lista...\n");
-
 	for (i = 0; i < numeroElementos; i++){
+		
 		int j = 0;
 		long indiceAleatorio = 0;
-
+		
 		elementos_en_lista = numeroElementos - i;
-
+		
 		/*Obtenemos indice aleatorio*/
 		indiceAleatorio = IndiceAleatorio(elementos_en_lista);
 
 		elem = Lista_Primero(lista);
-
+		printf("%d",elementos_en_lista);
 		assert(elem != NULL);
-
+		printf("Previo al for \n");
+		printf("%lu", (long)elem->objeto);
+		printf("\n");
 		/*Buscamos un elemento a sacar de la lista*/
 		for (elem = Lista_Primero(lista); elem != NULL; elem = Lista_Siguiente(lista, elem)) {
-
+			
 			if (j == indiceAleatorio) {
 #ifdef IMPRIMIR_LISTA
 				printf("%lu\n", (long)elem->objeto);
@@ -89,7 +92,10 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 
 			j++;
 		}
-
+		printf("salio");
+		printf("\n");
+		printf("%lu", (long)elem->objeto);
+		printf("\n");
 		if (elem == NULL){
 			/*No encontramos el valor (o Buscar esta mal implementada)*/
 			fprintf(stderr, "BarajarLista: Error critico en BarajarLista (linea %d)\n", __LINE__);
@@ -99,7 +105,8 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 		//Sacamos el elemeno de la lista
 		void *objeto = NULL;
 		objeto = elem->objeto;
-
+		printf("previo");
+		printf("\n");
 
 		Lista_Sacar(lista, elem);
 		free(elem);
