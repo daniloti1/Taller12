@@ -62,7 +62,7 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 
 	//Buscar elemento, sacarlo de lista, ponerla en lista_tmp
 	int elementos_en_lista;
-	printf("%d",numeroElementos);
+
 	printf("BarajarLista: Barajando la lista...\n");
 	for (i = 0; i < numeroElementos; i++){
 		
@@ -75,7 +75,6 @@ int BarajarLista(ListaEnlazada *lista, int numeroElementos)
 		indiceAleatorio = IndiceAleatorio(elementos_en_lista);
 
 		elem = Lista_Primero(lista);
-		printf("%d",elementos_en_lista);
 		assert(elem != NULL);
 		printf("Previo al for \n");
 		printf("%lu", (long)elem->objeto);
@@ -537,6 +536,16 @@ void RealizarPruebas(int numeroElementos)
 
 int main(int argc, char *argv[])
 {
+	printf("Solo para pruebas\n\n");
+	ListaEnlazada* l = (ListaEnlazada*) malloc(sizeof(ListaEnlazada));
+	Lista_Inicializar(l);
+	int* a = (int *) 5;
+	Lista_InsertarFin(l,a);
+	ElementoLista * elem = Lista_Buscar(l,a);
+	printf("Salimos de buscar\n");
+	printf("\n%p\n\n\n", elem);
+	printf("\n%p\n\n\n", elem->objeto);
+
 
 	if (argc < 2){
 		fprintf(stderr, "Por favor ingrese el numero de elementos como argumento ej.: ./prueba 1234");

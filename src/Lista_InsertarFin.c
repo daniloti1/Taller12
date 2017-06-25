@@ -3,6 +3,7 @@
 #include "miLista.h"
 
 extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
+	printf("Lista_InsertarFin\n");
 	ElementoLista *elemento = (ElementoLista*) malloc(sizeof(ElementoLista));	
 	
 	printf("%lu\n", (long)objeto);
@@ -15,8 +16,6 @@ extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 		(lista->ancla).anterior = elemento;
 		lista->numeroElementos++;
 		//free(objeto);
-		printf("Entro vacio \n");
-		printf("elemento %lu\n", (long)elemento->objeto);
 		return 1;
 	}else{
 		elemento->objeto=objeto;
@@ -28,8 +27,6 @@ extern int Lista_InsertarFin(ListaEnlazada *lista, void *objeto){
 		(lista->ancla).anterior = elemento;
 		lista->numeroElementos++;
 		//free(objeto);
-		printf("Entro lleno \n");
-		printf("elemento %lu\n", (long)elemento->objeto);
 		return 1;
 	}
 	return 0;
