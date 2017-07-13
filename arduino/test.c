@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
 	}
 	float resultado = calculateSD(lista);
-	printf("%f",resultado);
+	printf("%f\n",resultado);
 
 	close( fd );
 	return 0;	
