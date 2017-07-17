@@ -43,12 +43,17 @@ int connect_retry( int domain, int type, int protocol, 	const struct sockaddr *a
 }
 
 
-void print_uptime( int sockfd) { 
+void print_uptime( int sockfd, char * ruta) { 
 	int n; 
 	char buf[ BUFLEN]; 
 
-	while (( n = recv( sockfd, buf, BUFLEN, 0)) > 0) 				
+	send(sockfd, ruta, strlen(ruta), 0);
+
+	while (( n = recv( sockfd, buf, BUFLEN, 0)) > 0) {
+		send(sockfd, ruta, strlen(ruta), 0);
+ 		write( STDOUT_FILENO, ruta, n);		
 		write( STDOUT_FILENO, buf, n); 			//Imprimimos lo que recibimos
+	}	
 	if (n < 0) 	
 		printf(" recv error"); 
 }
@@ -59,12 +64,12 @@ int main( int argc, char *argv[]) {
 
 	int sockfd;
 
-	if(argc <  4){
+	if(argc <  5){
 		printf("Uso: ./cliente <ip> <puerto> <archivo>\n");
 		exit(-1);
 	}
 
-	if(argc != 4){
+	if(argc != 5){
 		printf( "por favor especificar un numero de puerto\n");
 	}
 
@@ -89,7 +94,7 @@ int main( int argc, char *argv[]) {
 	} 
 
 	//En este punto ya tenemos una conexión válida
-	print_uptime(sockfd);
+	print_uptime(sockfd, argv[3]);
 
 	return 0; 
 }

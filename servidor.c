@@ -78,8 +78,21 @@ void serve(int sockfd) {
 			send( clfd, buf, strlen( buf), 0); 
 		} 
 		else { 
-			while (fgets( buf, BUFLEN, fp) != NULL) 		//lo que nos haya devuelto uptime, lo mandamos al cliente
+			while (fgets( buf, BUFLEN, fp) != NULL) {		//lo que nos haya devuelto uptime, lo mandamos al cliente
+
+				
+				char recibido[BUFLEN];
+				
+				
 				send( clfd, buf, strlen(buf), 0); 
+
+				recv( sockfd, recibido, BUFLEN, 0);
+
+
+
+				printf("Recibido: %s\n",recibido);
+				printf("%s\n",buf);
+			}
 			pclose( fp); 						//cerramos el pipe
 		}
 		close(clfd); 							//cerramos la conexion con el cliente.
