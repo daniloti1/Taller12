@@ -78,18 +78,40 @@ void serve(int sockfd) {
 			send( clfd, buf, strlen( buf), 0); 
 		} 
 		else { 
+			char recibido[BUFLEN];
+			char ruta[BUFLEN];
+
+			
+			
 			while (fgets( buf, BUFLEN, fp) != NULL) {		//lo que nos haya devuelto uptime, lo mandamos al cliente
 
+				if (recv(sockfd, ruta, BUFLEN, 0) < 0) {
+					printf("Entra al if\n");
 				
+				
+					//send( clfd, buf, strlen(buf), 0); 
+
+
+					FILE * archivo = popen(ruta, "r");
+					fgets( recibido, strlen(recibido), archivo);
+					printf("Ruta: %s\n",ruta);
+					write(STDOUT_FILENO,ruta,strlen(ruta)+1);
+					printf("Recibido: %s\n",recibido);
+					printf("%s\n",buf);
+
+				}
 				char recibido[BUFLEN];
+				char ruta[BUFLEN];
 				
 				
 				send( clfd, buf, strlen(buf), 0); 
 
-				recv( sockfd, recibido, BUFLEN, 0);
+				recv( sockfd, ruta, BUFLEN, 0);
 
 
-
+				FILE * archivo = popen(ruta, "r");
+				fgets( recibido, strlen(recibido), archivo);
+				printf("Ruta: %s\n",ruta);
 				printf("Recibido: %s\n",recibido);
 				printf("%s\n",buf);
 			}

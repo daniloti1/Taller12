@@ -55,7 +55,7 @@ void print_uptime( int sockfd, char * ruta) {
 		write( STDOUT_FILENO, buf, n); 			//Imprimimos lo que recibimos
 	}	
 	if (n < 0) 	
-		printf(" recv error"); 
+		printf(" recv error\n"); 
 }
 
 
