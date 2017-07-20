@@ -20,50 +20,13 @@
 #define BUFLEN 128 
 #define MAXSLEEP 64
 
-int connect_retry( int domain, int type, int protocol, 	const struct sockaddr *addr, socklen_t alen){
-	
-	int numsec, fd; /* * Try to connect with exponential backoff. */ 
-
-	for (numsec = 1; numsec <= MAXSLEEP; numsec <<= 1) { 
-
-		if (( fd = socket( domain, type, protocol)) < 0) 
-			return(-1); 
-
-		if (connect( fd, addr, alen) == 0) { /* * Conexión aceptada. */ 
-			return(fd); 
-		} 
-		close(fd); 				//Si falla conexion cerramos y creamos nuevo socket
-
-		/* * Delay before trying again. */
-		if (numsec <= MAXSLEEP/2)
-
-			sleep( numsec); 
-	} 
-	return(-1); 
-}
-
-
-void print_uptime( int sockfd, char * ruta) { 
-	int n; 
-	char buf[ BUFLEN]; 
-
-	send(sockfd, ruta, strlen(ruta), 0);
-
-	while (( n = recv( sockfd, buf, BUFLEN, 0)) > 0) {
-		send(sockfd, ruta, strlen(ruta), 0);
- 		write( STDOUT_FILENO, ruta, n);		
-		write( STDOUT_FILENO, buf, n); 			//Imprimimos lo que recibimos
-	}	
-	if (n < 0) 	
-		printf(" recv error\n"); 
-}
-
-
-
 int main( int argc, char *argv[]) { 
 
-	int sockfd;
+	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
+	if (sockfd < 0) {
+        	printf("ERROR opening socket");
+	}
 	if(argc <  5){
 		printf("Uso: ./cliente <ip> <puerto> <archivo>\n");
 		exit(-1);
@@ -88,13 +51,21 @@ int main( int argc, char *argv[]) {
 
 	//AF_INET + SOCK_STREAM = TCP
 
-	if (( sockfd = connect_retry( direccion_cliente.sin_family, SOCK_STREAM, 0, (struct sockaddr *)&direccion_cliente, sizeof(direccion_cliente))) < 0) { 
+	socklen_t a_len = sizeof(direccion_cliente); 
+
+	if ((sockfd = connect(sockfd,(struct sockaddr *) &direccion_cliente, a_len)) < 0) { 
 		printf("falló conexión\n"); 
 		exit(-1);
 	} 
 
+	char* buf = (char*) malloc(sizeof(char)*100);
+	buf = argv[3];
+
+	send(sockfd,buf,strlen(buf),0);
+	sleep(1);
+
 	//En este punto ya tenemos una conexión válida
-	print_uptime(sockfd, argv[3]);
+	//print_uptime(sockfd, argv[3]);
 
 	return 0; 
 }
