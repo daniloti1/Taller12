@@ -27,7 +27,7 @@
 int main( int argc, char *argv[]) { 
 	int sockfd, n;
 	char *host; 
-	//FILE *archivo;
+	int archivo;
 	if(argc < 2){
 		printf("Uso: ./servidor <numero de puerto>\n");
 		exit(-1);
@@ -52,18 +52,20 @@ int main( int argc, char *argv[]) {
 
 	//Direccion del servidor
 	struct sockaddr_in direccion_servidor;
-
+	printf("antes del memeset\n");
 	memset(&direccion_servidor, 0, sizeof(direccion_servidor));	//ponemos en 0 la estructura direccion_servidor
 
 	//llenamos los campos
 	direccion_servidor.sin_family = AF_INET;		//IPv4
 	direccion_servidor.sin_port = htons(puerto);		//Convertimos el numero de puerto al endianness de la red
+	printf("antes de la direccion ip\n");
 	direccion_servidor.sin_addr.s_addr = inet_addr(argv[1]) ;	//Nos vinculamos a la interface localhost o podemos usar INADDR_ANY para ligarnos A TODAS las interfaces
-
+	printf("antes del socket\n");
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
+	printf("antes del bind\n");
 	bind(sockfd, (struct sockaddr *) &direccion_servidor, sizeof(direccion_servidor));
-
+	printf("antes del listen\n");
 	listen(sockfd,QLEN);
 
 	
@@ -75,31 +77,45 @@ int main( int argc, char *argv[]) {
 	
 	//int tam_socket;
 	int acept_socket;
-	struct sockaddr_in socket_cliente;
 
-	socklen_t tam_socket=sizeof(socket_cliente);
-	socket_cliente.sin_family = AF_INET;
-	socket_cliente.sin_port = htons(puerto);
+	socklen_t tam_socket=sizeof(direccion_servidor);
 	
-	acept_socket = accept(sockfd, (struct sockaddr *) &socket_cliente,&tam_socket);
+	printf("antes del acept\n");
+	acept_socket = accept(sockfd, (struct sockaddr *) &direccion_servidor,&tam_socket);
 	if (acept_socket == -1) {
 		printf("accept = -1");
 	}
 	char buffer[BUFLEN];
+	char ruta[BUFLEN] = {0};
+	printf("antes del recv\n");
+	int m = recv(sockfd, ruta, BUFLEN, 0);
+	printf("%d\n",m);
+	printf("ruta: %s\n", ruta);
+	puts(ruta);
+	
+	printf("antes del while(1)\n");
 	while(1){
-		
-		
-		
-		
+		printf("antes del acept\n");
+		acept_socket = accept(sockfd, (struct sockaddr *) &direccion_servidor,&tam_socket);
+		if (acept_socket == -1) {
+			printf("accept = -1");
+		}
+		char buffer[BUFLEN];
+		char ruta[BUFLEN] = {0};
+		printf("antes del recv\n");
+		int m = recv(sockfd, ruta, BUFLEN, 0);
+		printf("%d\n",m);
+		printf("ruta: %s\n", ruta);
+		puts(ruta);
 		
 		int recibido = -1;
-		//archivo = fopen("archivoRecibido","wb");
+		archivo = open(ruta,O_RDONLY);
 		while((recibido = recv(sockfd, buffer, BUFLEN, 0)) > 0){
 			printf("servidor recibe: %s\n\n",buffer);
-			//fwrite(buffer,sizeof(char),1,archivo);
+			read(archivo,buffer,BUFLEN);
 		}
 
-		//fclose(archivo);
+		close(archivo);
 		
 		
 		

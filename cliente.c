@@ -20,8 +20,12 @@
 #define BUFLEN 128 
 #define MAXSLEEP 64
 //  ./cliente 127.0.0.1 45343 /home/eduardo/imagen.png imagen.png
-int main( int argc, char *argv[]) { 
+int main( int argc, char *argv[]) {
+
+	printf("argv[3]: %s\n",argv[3]); 
 	int archivo;
+
+	printf("antes del socket\n");
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (sockfd < 0) {
@@ -52,43 +56,38 @@ int main( int argc, char *argv[]) {
 
 	//AF_INET + SOCK_STREAM = TCP
 
-	int a_len = sizeof(direccion_cliente); 
+	socklen_t a_len = sizeof(direccion_cliente); 
+	printf("antes del connect\n");
 
-	if ((sockfd = connect(sockfd,(struct sockaddr *) &direccion_cliente, a_len)) < 0) { 
+	if ((connect(sockfd,(struct sockaddr *) &direccion_cliente, a_len)) < 0) { 
 		printf("falló conexión\n"); 
 		exit(-1);
 	} 
 
 	char buffer[BUFLEN]={0};
-	char *recibido=(char*) malloc(sizeof(char)*1000);
+	char *recibido=(char*) malloc(sizeof(char)*100);
 	int envio = -1;
+	char * ruta = argv[3];
+	printf("%s\n",ruta);
+	printf("antes del send\n");
+	printf("size: %d\n",strlen(ruta));
+	
 
-	while((envio = send(sockfd,argv[3],strlen(argv[3]),0))<0) {
-		printf("no se envio\n");
-		envio = send(sockfd,argv[3],strlen(argv[3]),0);
+	envio = send(sockfd,ruta,strlen(ruta),0);
 
-	}
-
-	recv(sockfd, recibido , 6000 , 0);	
+	printf("%d\n",envio);
+	/*
+	printf("antes del recv\n");
+	recv(sockfd, recibido , 100 , 0);	
 	printf("recibido: %s\n",recibido);	
-
+	printf("antes del while\n");
 	while((recv(sockfd, buffer, BUFLEN, 0)) > 0){
 		printf("%s",buffer);
 		archivo = open(argv[4],O_WRONLY|O_CREAT);
 		write(archivo,buffer,sizeof(char));
 	}
-
+	printf("sale del while\n");
 	close(archivo);
-	/*while(!feof(archivo)){
-		fread(buffer,sizeof(char),BUFFSIZE,archivo);
-		if(send(sockfd,buffer,BUFFSIZE,0) == -1){
-			printf("Error al enviar");
-			exit(-1);
-		}
-	}
-	
-	fclose(archivo);
-	close(sockfd);
 	*/
 	return 0; 
 }
