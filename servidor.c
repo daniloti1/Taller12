@@ -66,14 +66,6 @@ int main( int argc, char *argv[]) {
 
 	listen(sockfd,QLEN);
 
-	
-	//char buf2[10000] = {0};
-	
-	//char ruta[100] = {0};
-
-	//socklen_t a_len = sizeof(direccion_servidor); 
-	
-	//int tam_socket;
 	int acept_socket;
 	struct sockaddr_in socket_cliente;
 	
@@ -90,20 +82,16 @@ int main( int argc, char *argv[]) {
 		
 		char buffer[1];
 		int recibido = -1;
-		archivo = fopen("archivoRecibido","wb");
+		
+		
+		archivo = fopen("kurt","wb");
 		while((recibido = recv(sockfd, buffer, BUFFSIZE, 0)) > 0){
 			printf("%s",buffer);
 			fwrite(buffer,sizeof(char),1,archivo);
 		}
 
 		fclose(archivo);
-		
-		
-		
 	}
-	
-
-	
 	exit( 1); 
 }
 
