@@ -79,6 +79,18 @@ int main( int argc, char *argv[]) {
 		
 		char buffer[1];
 		int recibido = -1;
+		
+		FILE *tmp;//Apuntador al archivo temporal que guarda el MD5SUM del archivo.
+		char *fileName = "verificacion";
+		char md5sum[80];
+		system("md5sum archivoRecibido >> verificacion");
+	
+		tmp = fopen(fileName,"r");
+		fscanf(tmp,"%s",md5sum);	
+		printf("\nMD5SUM:%s\n",md5sum);	
+		write(sockfd,md5sum,sizeof(md5sum));
+		fclose(tmp);
+		
 		archivo = fopen("kurt","wb");
 		while((recibido = recv(sockfd, buffer, BUFFSIZE, 0)) > 0){
 			printf("%s",buffer);
