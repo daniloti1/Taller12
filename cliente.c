@@ -16,12 +16,12 @@
 #include <arpa/inet.h>
 #include <sys/resource.h>
 
-
+#define BUFFSIZE 1
 #define BUFLEN 128 
 #define MAXSLEEP 64
-
+//  ./cliente 127.0.0.1 45343 /home/eduardo/imagen.png imagen.png
 int main( int argc, char *argv[]) { 
-
+	FILE *archivo;
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (sockfd < 0) {
@@ -37,7 +37,7 @@ int main( int argc, char *argv[]) {
 	}
 
 	int puerto = atoi(argv[2]);
-
+	archivo = fopen(argv[1],"rb");
 
 	//Direccion del servidor
 	struct sockaddr_in direccion_cliente;
@@ -51,22 +51,26 @@ int main( int argc, char *argv[]) {
 
 	//AF_INET + SOCK_STREAM = TCP
 
-	socklen_t a_len = sizeof(direccion_cliente); 
+	int a_len = sizeof(direccion_cliente); 
 
 	if ((sockfd = connect(sockfd,(struct sockaddr *) &direccion_cliente, a_len)) < 0) { 
 		printf("falló conexión\n"); 
 		exit(-1);
 	} 
 
-	char* buf = (char*) malloc(sizeof(char)*100);
-	buf = argv[3];
+	char buffer[BUFFSIZE];
 
-	send(sockfd,buf,strlen(buf),0);
-	sleep(1);
-
-	//En este punto ya tenemos una conexión válida
-	//print_uptime(sockfd, argv[3]);
-
+	while(!feof(archivo)){
+		fread(buffer,sizeof(char),BUFFSIZE,archivo);
+		if(send(sockfd,buffer,BUFFSIZE,0) == -1){
+			printf("Error al enviar");
+			exit(-1);
+		}
+	}
+	
+	fclose(archivo);
+	close(sockfd);
+	
 	return 0; 
 }
 

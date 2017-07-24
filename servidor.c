@@ -16,17 +16,18 @@
 #include <arpa/inet.h>
 #include <sys/resource.h>
 
+#define BUFFSIZE 1
 #define BUFLEN 128 
 #define QLEN 10 
 
 #ifndef HOST_NAME_MAX 
 #define HOST_NAME_MAX 256 
 #endif	
-
+//    ./servirdor 127.0.0.1 45343
 int main( int argc, char *argv[]) { 
 	int sockfd, n;
 	char *host; 
-
+	FILE *archivo;
 	if(argc < 2){
 		printf("Uso: ./servidor <numero de puerto>\n");
 		exit(-1);
@@ -66,23 +67,36 @@ int main( int argc, char *argv[]) {
 	listen(sockfd,QLEN);
 
 	
-	char buf2[10000] = {0};
+	//char buf2[10000] = {0};
 	
-	char ruta[100] = {0};
+	//char ruta[100] = {0};
 
-	socklen_t a_len = sizeof(direccion_servidor); 
+	//socklen_t a_len = sizeof(direccion_servidor); 
 	
-	int m;
-
+	//int tam_socket;
+	int acept_socket;
+	struct sockaddr_in socket_cliente;
+	
 	while(1){
-		int new_sd = accept(sockfd, (struct sockaddr *) &direccion_servidor, &a_len);
-		for (int i = 0; i<100; i++) {
-			(m = recv(new_sd,ruta,100,0));
-			//printf("%d",m);
+		int tam_socket=sizeof(socket_cliente);
+		
+		acept_socket = accept(sockfd, (struct sockaddr *) &socket_cliente,&tam_socket);
+		
+		socket_cliente.sin_family = AF_INET;
+		socket_cliente.sin_port = htons(puerto);
+		
+		char buffer[1];
+		int recibido = -1;
+		archivo = fopen("archivoRecibido","wb");
+		while((recibido = recv(sockfd, buffer, BUFFSIZE, 0)) > 0){
+			printf("%s",buffer);
+			fwrite(buffer,sizeof(char),1,archivo);
 		}
-		printf("Ruta: %s\n",ruta);		
-	
 
+		fclose(archivo);
+		
+		
+		
 	}
 	
 
