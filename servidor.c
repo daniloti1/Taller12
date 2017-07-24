@@ -78,9 +78,12 @@ int main( int argc, char *argv[]) {
 	struct sockaddr_in socket_cliente;
 	
 	while(1){
-		int tam_socket=sizeof(socket_cliente);
+		socklen_t tam_socket=sizeof(socket_cliente);
 		
 		acept_socket = accept(sockfd, (struct sockaddr *) &socket_cliente,&tam_socket);
+		if (acept_socket == -1) {
+			printf("accept = -1");
+		}
 		
 		socket_cliente.sin_family = AF_INET;
 		socket_cliente.sin_port = htons(puerto);
