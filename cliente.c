@@ -21,7 +21,7 @@
 #define MAXSLEEP 64
 //  ./cliente 127.0.0.1 45343 /home/eduardo/imagen.png imagen.png
 int main( int argc, char *argv[]) { 
-	FILE *archivo;
+	int archivo;
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (sockfd < 0) {
@@ -37,9 +37,9 @@ int main( int argc, char *argv[]) {
 	}
 
 	int puerto = atoi(argv[2]);
-	archivo = fopen(argv[3],"rb");
+	//archivo = fopen(argv[3],"rb");
 	
-	printf("Abrio el archivo\n"); 
+	//printf("Abrio el archivo\n"); 
 	//Direccion del servidor
 	struct sockaddr_in direccion_cliente;
 
@@ -59,9 +59,27 @@ int main( int argc, char *argv[]) {
 		exit(-1);
 	} 
 
-	char buffer[BUFFSIZE];
+	char buffer[BUFLEN]={0};
+	char *recibido=(char*) malloc(sizeof(char)*1000);
+	int envio = -1;
 
-	while(!feof(archivo)){
+	while((envio = send(sockfd,argv[3],strlen(argv[3]),0))<0) {
+		printf("no se envio\n");
+		envio = send(sockfd,argv[3],strlen(argv[3]),0);
+
+	}
+
+	recv(sockfd, recibido , 6000 , 0);	
+	printf("recibido: %s\n",recibido);	
+
+	while((recv(sockfd, buffer, BUFLEN, 0)) > 0){
+		printf("%s",buffer);
+		archivo = open(argv[4],O_WRONLY|O_CREAT);
+		write(archivo,buffer,sizeof(char));
+	}
+
+	close(archivo);
+	/*while(!feof(archivo)){
 		fread(buffer,sizeof(char),BUFFSIZE,archivo);
 		if(send(sockfd,buffer,BUFFSIZE,0) == -1){
 			printf("Error al enviar");
@@ -71,7 +89,7 @@ int main( int argc, char *argv[]) {
 	
 	fclose(archivo);
 	close(sockfd);
-	
+	*/
 	return 0; 
 }
 

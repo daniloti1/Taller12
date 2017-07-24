@@ -27,7 +27,7 @@
 int main( int argc, char *argv[]) { 
 	int sockfd, n;
 	char *host; 
-	FILE *archivo;
+	//FILE *archivo;
 	if(argc < 2){
 		printf("Uso: ./servidor <numero de puerto>\n");
 		exit(-1);
@@ -76,27 +76,30 @@ int main( int argc, char *argv[]) {
 	//int tam_socket;
 	int acept_socket;
 	struct sockaddr_in socket_cliente;
+
+	socklen_t tam_socket=sizeof(socket_cliente);
+	socket_cliente.sin_family = AF_INET;
+	socket_cliente.sin_port = htons(puerto);
 	
+	acept_socket = accept(sockfd, (struct sockaddr *) &socket_cliente,&tam_socket);
+	if (acept_socket == -1) {
+		printf("accept = -1");
+	}
+	char buffer[BUFLEN];
 	while(1){
-		socklen_t tam_socket=sizeof(socket_cliente);
 		
-		acept_socket = accept(sockfd, (struct sockaddr *) &socket_cliente,&tam_socket);
-		if (acept_socket == -1) {
-			printf("accept = -1");
-		}
 		
-		socket_cliente.sin_family = AF_INET;
-		socket_cliente.sin_port = htons(puerto);
 		
-		char buffer[1];
+		
+		
 		int recibido = -1;
-		archivo = fopen("archivoRecibido","wb");
-		while((recibido = recv(sockfd, buffer, BUFFSIZE, 0)) > 0){
-			printf("%s",buffer);
-			fwrite(buffer,sizeof(char),1,archivo);
+		//archivo = fopen("archivoRecibido","wb");
+		while((recibido = recv(sockfd, buffer, BUFLEN, 0)) > 0){
+			printf("servidor recibe: %s\n\n",buffer);
+			//fwrite(buffer,sizeof(char),1,archivo);
 		}
 
-		fclose(archivo);
+		//fclose(archivo);
 		
 		
 		
