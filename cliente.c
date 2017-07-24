@@ -76,7 +76,7 @@ int main( int argc, char *argv[]) {
 	envio = send(sockfd,ruta,strlen(ruta),0);
 
 	printf("%d\n",envio);
-	/*
+	
 	printf("antes del recv\n");
 	recv(sockfd, recibido , 100 , 0);	
 	printf("recibido: %s\n",recibido);	
@@ -88,7 +88,7 @@ int main( int argc, char *argv[]) {
 	}
 	printf("sale del while\n");
 	close(archivo);
-	*/
+	
 	return 0; 
 }
 

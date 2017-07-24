@@ -106,14 +106,10 @@ int main( int argc, char *argv[]) {
 		int m = recv(acept_socket, ruta, BUFLEN, 0);
 		printf("%d\n",m);
 		printf("ruta: %s\n", ruta);
-		puts(ruta);
 		
 		int recibido = -1;
 		archivo = open(ruta,O_RDONLY);
-		while((recibido = recv(sockfd, buffer, BUFLEN, 0)) > 0){
-			printf("servidor recibe: %s\n\n",buffer);
-			read(archivo,buffer,BUFLEN);
-		}
+		read(archivo,buffer,BUFLEN);
 
 		close(archivo);
 		
