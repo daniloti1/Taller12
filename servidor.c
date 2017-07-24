@@ -103,7 +103,7 @@ int main( int argc, char *argv[]) {
 		char buffer[BUFLEN];
 		char ruta[BUFLEN] = {0};
 		printf("antes del recv\n");
-		int m = recv(sockfd, ruta, BUFLEN, 0);
+		int m = recv(acept_socket, ruta, BUFLEN, 0);
 		printf("%d\n",m);
 		printf("ruta: %s\n", ruta);
 		puts(ruta);
