@@ -37,8 +37,9 @@ int main( int argc, char *argv[]) {
 	}
 
 	int puerto = atoi(argv[2]);
-	archivo = fopen(argv[1],"rb");
-
+	archivo = fopen(argv[3],"rb");
+	
+	printf("Abrio el archivo\n"); 
 	//Direccion del servidor
 	struct sockaddr_in direccion_cliente;
 
@@ -73,5 +74,6 @@ int main( int argc, char *argv[]) {
 	
 	return 0; 
 }
+
 
 
