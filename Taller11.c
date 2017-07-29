@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
 	printf("Numero que deberia salir: %d\n",numero);
 
 
-	int numHilos = tamano/hilos;
+	int numElementos = tamano/hilos;
 
 
 	int sumaFinal = 0;
@@ -122,13 +122,17 @@ int main(int argc, char **argv) {
 
 	double tiempo_0 = obtenerTiempoActual();
 
-	for (int j = 0; j < tamano; j += numHilos) {		
+	for (int j = 0; j < tamano; j += numElementos) {		
 
 		apy * estructura = (apy *)malloc(sizeof(apy));
 
 		estructura->inicio = j;
 
-		estructura->fin = j + numHilos;
+		if (numElementos*hilos < tamano) {
+			j++;
+		}
+
+		estructura->fin = j + numElementos;
 
 		estructura->arreglo = arreglo;
 
