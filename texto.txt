@@ -1,2 +1,0 @@
-texto que se lee del archivo
-dos lineas
