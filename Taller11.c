@@ -43,8 +43,6 @@ typedef struct _apy {
 
 	int * arreglo;
 
-	//int tamano;
-
 	int inicio;
 
 	int fin;
@@ -54,14 +52,11 @@ typedef struct _apy {
 
 void * funcion(void* estructura) {
 
-	//int tamano = estructura->tamano;
-
 	apy * estructura2 = (apy*) estructura;
 
 	int inicio = (int)estructura2->inicio;
 
 	int fin = (int)estructura2->fin;
-	printf("Fin: %d\n",fin);
 
 	int * arreglo = (int *)estructura2->arreglo;
 
@@ -129,21 +124,13 @@ int main(int argc, char **argv) {
 
 	for (int j = 0; j < tamano; j += numHilos) {		
 
-		pthread_t id;
-
-
-
 		apy * estructura = (apy *)malloc(sizeof(apy));
 
 		estructura->inicio = j;
 
 		estructura->fin = j + numHilos;
-		printf("Fin estructura: %d\n",estructura->fin);
-		//estructura->tamano = ;
 
 		estructura->arreglo = arreglo;
-
-		//apy * estructura = &est;
 
 
 		int statusHilo = pthread_create(&listaIds[contador], NULL, funcion, (void *)estructura);
@@ -157,21 +144,17 @@ int main(int argc, char **argv) {
 
 		}
 
-		//funcion(&estructura);
 
 		contador++;
 
 	}
 
 	for (int k = 0; k < hilos; k++) {
-		printf("Dentro del For: %d\n",k);
 
 		void * retorno = NULL;
-		printf("Id del hilo: %d\n",listaIds[k]);
 
 		int status = pthread_join(listaIds[k], &retorno);
-
-		printf("se hizo el join:\n");	
+	
 		if (status < 0) {
 
 			fprintf(stderr, "Error al crear el hilo\n");
