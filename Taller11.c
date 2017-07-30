@@ -134,6 +134,10 @@ int main(int argc, char **argv) {
 
 		estructura->fin = j + numElementos;
 
+		if (j + numElementos > tamano) {
+			estructura->fin = tamano;
+		}
+
 		estructura->arreglo = arreglo;
 
 
