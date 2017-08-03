@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
 
 	if (argc < 3) {
 
-		printf("./Taller11 <tamaÃ±o_arreglo> <numero_hilos>");
+		printf("./Taller11 <tamaño_arreglo> <numero_hilos>");
 
 		exit(1);
 
@@ -99,20 +99,8 @@ int main(int argc, char **argv) {
 
 
 	int * arreglo = (int *) malloc(sizeof(int)*tamano);
-	
-	int numero = 0;
-
-	for (int i = 0; i < tamano; i++) {
-
-		*(arreglo+i) = aleatorio(50,200);
-		numero += *(arreglo+i);
-
-	}
-	printf("Numero que deberia salir: %d\n",numero);
-
 
 	int numElementos = tamano/hilos;
-
 
 	int sumaFinal = 0;
 
