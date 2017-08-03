@@ -24,8 +24,11 @@ int numero_lineas(char*ruta,int*tam_lineas){
 	return -1;
 }
 
-main(int arg c){
-	
+main(int argc, char ** argv){
+	char ** palabras = (char**)malloc(sizeof(char*)*(argc-3));
+	for (int i  = 0; i < argc-3; i++) {
+		*(palabras+i) = argv[i+3];
+	}
 
 
 }
