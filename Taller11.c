@@ -102,6 +102,12 @@ int main(int argc, char **argv) {
 
 	int numElementos = tamano/hilos;
 
+	for (int i = 0; i < tamano; i++) {
+
+		*(arreglo+i) = aleatorio(50,200);
+
+	}
+
 	int sumaFinal = 0;
 
     	pthread_t * listaIds = (pthread_t *) malloc(sizeof(pthread_t)*hilos);
