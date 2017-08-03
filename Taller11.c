@@ -10,7 +10,7 @@
 
 
 
-int aleatorio(int min, int max){
+long aleatorio(int min, int max){
 
 
 	return (rand() % (max-min+1)) + min;
@@ -41,7 +41,7 @@ double obtenerTiempoActual(){
 
 typedef struct _apy {
 
-	int * arreglo;
+	long * arreglo;
 
 	int inicio;
 
@@ -58,7 +58,7 @@ void * funcion(void* estructura) {
 
 	int fin = (int)estructura2->fin;
 
-	int * arreglo = (int *)estructura2->arreglo;
+	long * arreglo = (long *)estructura2->arreglo;
 
 
 	int suma = 0;
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
 	int hilos = atoi(argv[2]);
 
 
-	int * arreglo = (int *) malloc(sizeof(int)*tamano);
+	long * arreglo = (long *) malloc(sizeof(long)*tamano);
 
 	int numElementos = tamano/hilos;
 
