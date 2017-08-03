@@ -10,7 +10,7 @@
 
 
 
-long aleatorio(int min, int max){
+long unsigned aleatorio(int min, int max){
 
 
 	return (rand() % (max-min+1)) + min;
@@ -41,7 +41,7 @@ double obtenerTiempoActual(){
 
 typedef struct _apy {
 
-	long * arreglo;
+	long unsigned * arreglo;
 
 	int inicio;
 
@@ -58,7 +58,7 @@ void * funcion(void* estructura) {
 
 	int fin = (int)estructura2->fin;
 
-	long * arreglo = (long *)estructura2->arreglo;
+	long unsigned * arreglo = (long unsigned *)estructura2->arreglo;
 
 
 	int suma = 0;
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
 	int hilos = atoi(argv[2]);
 
 
-	long * arreglo = (long *) malloc(sizeof(long)*tamano);
+	long unsigned * arreglo = (long unsigned *) malloc(sizeof(long unsigned)*tamano);
 
 	int numElementos = tamano/hilos;
 
@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
 
 	}
 
-	int sumaFinal = 0;
+	long unsigned sumaFinal = 0;
 
     	pthread_t * listaIds = (pthread_t *) malloc(sizeof(pthread_t)*hilos);
 
@@ -166,9 +166,9 @@ int main(int argc, char **argv) {
 		}
 
 
-		printf("Valor de Retorno: %lu\n",(long)retorno);
+		printf("Valor de Retorno: %lu\n",(long unsigned)retorno);
 
-		sumaFinal += (int) retorno;
+		sumaFinal += (long unsigned) retorno;
 
 	}
 
@@ -177,9 +177,9 @@ int main(int argc, char **argv) {
 
 	double tiempoTotal = tiempo_1 - tiempo_0;
 
-	printf("Suma Total: %d\n",sumaFinal);
+	printf("Suma Total: %lu\n",sumaFinal);
 
 
-	printf("Tiempo de ejecucion: %9f\n",tiempoTotal);
+	printf("Tiempo de ejecucion: %.9f\n",tiempoTotal);
 
 }
