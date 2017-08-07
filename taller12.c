@@ -117,7 +117,7 @@ int main(int argc, char ** argv){
 
 		for( int j = 0 ; j < divisionParaCadaHilo; j++){
 			char c = getc(fp);
-			*(*(parrafos+k)+j) = c; 
+			*(*(palabras+k)+j) = c; 
 		}      
 		inicioParaElHilo += divisionParaCadaHilo;
 
