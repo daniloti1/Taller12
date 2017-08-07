@@ -39,37 +39,44 @@ typedef struct _apy {
 
 	char * parrafo;
 
+	int tamano;
+
 } apy;
 
 
 void * funcion(void* estructura) {
 	pthread_mutex_t mutex;
+
+	pthread_mutex_lock(&mutex);
 	apy * estructura2 = (apy*) estructura;
+	pthread_mutex_unlock(&mutex);
 
 	char *str = (char *) estructura2->parrafo;
 	char ** palabras = estructura2->palabras;
 	int * num_palabras = estructura2->numpalabras;
+	int tamano = estructura2->tamano;
+	
 	char *token;
 	token = strtok(str, " \"!·$%&/()=º|@#~½¬<>-_'ç`+*[]{}ḉç¿,.!?:;");
 
 	while (token != NULL) {
-	if (!strcmp(*(palabras), token)) {
-    		pthread_mutex_lock(&mutex);
-		*(num_palabras) = *(num_palabras) + 1;
-		pthread_mutex_unlock(&mutex);
-	} else if (!strcmp(*(palabras + 1), token)) {
-		pthread_mutex_lock(&mutex);
-		*(num_palabras + 1) = *(num_palabras + 1) + 1;
-		pthread_mutex_unlock(&mutex);
-	} else if (!strcmp(*(palabras + 2), token)) {
-		pthread_mutex_lock(&mutex);
-		*(num_palabras + 2) = *(num_palabras + 2) + 1;
-		pthread_mutex_unlock(&mutex);
-	}
-	token = strtok(NULL, " \"!·$%&/()=º|@#~½¬<>-_'ç`+*[]{}ḉç¿,.!?:;");
+		for (int i = 0; i < tamano; i++) {
+			if (!strcmp(*(palabras+i), token)) {
+		    		pthread_mutex_lock(&mutex);
+				
+				//puts(*(palabras+i));
+				
+				*(num_palabras + i) = *(num_palabras + i) + 1;
+				pthread_mutex_unlock(&mutex);
+			}
+		}
+		token = strtok(NULL, " \"!·$%&/()=º|@#~½¬<>-_'ç`+*[]{}ḉç¿,.!?:;");
 	}
 
-	printf("--*-Palabras encontradas-*-- \nPalabra: %s - > Cantidad: %d\nPalabra: %s - > Cantidad: %d\nPalabra: %s - > Cantidad: %d\n", *(palabras), *(num_palabras), *(palabras + 1), *(num_palabras + 1), *(palabras + 2), *(num_palabras + 2));
+	printf("--*-Palabras encontradas-*-- \n");
+	for (int i = 0; i < tamano; i++) {
+		printf("Palabra: %s,  Cantidad: %d\n", *(palabras+i), *(num_palabras+i));
+	}
 	return (void *) 0;
 
 }
@@ -102,26 +109,28 @@ int main(int argc, char ** argv){
 	}
 	
 	for(int j = 1; j < numLineas ; j++){
-        totPalabraas  += *(numCaracteresXLinea+j);
-    }
+        	totPalabraas  += *(numCaracteresXLinea+j);
+    	}
 	
 	int divisionParaCadaHilo=totPalabraas/numHilos;
-	
+
 	int inicioParaElHilo=0;
 	
 	for(int k = 0; k < numHilos; k++){
-		FILE* fp=fopen(ruta,"r");//apertura de archivo
+		FILE* fp = fopen(ruta,"r");
 		
-		fseek(fp, inicioParaElHilo,SEEK_SET); 
+		fseek(fp, inicioParaElHilo, SEEK_SET);
+		 
 		*(parrafos+k) = malloc(divisionParaCadaHilo*sizeof(char));
 
 		for( int j = 0 ; j < divisionParaCadaHilo; j++){
 			char c = getc(fp);
 			*(*(parrafos+k)+j) = c; 
 		}      
-		inicioParaElHilo += divisionParaCadaHilo;
+		inicioParaElHilo += divisionParaCadaHilo*sizeof(char);
 
 	}
+	//fclose(fp);
 
 	pthread_t * listaIds = (pthread_t *) malloc(sizeof(pthread_t)*numHilos);
 	
@@ -135,7 +144,7 @@ int main(int argc, char ** argv){
 		estructura->parrafo = parrafos[j];
 		estructura->palabras = palabras;
 		estructura->numpalabras = numpalabras;
-		
+		estructura->tamano = argc-3;
 
 		int statusHilo = pthread_create(&listaIds[j], NULL, funcion, (void *) estructura);
 		if (statusHilo < 0) {
