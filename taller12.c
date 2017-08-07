@@ -76,6 +76,15 @@ void * funcion(void* estructura) {
 
 
 int main(int argc, char ** argv){
+	
+	if (argc < 3) {
+
+		printf("./taller12 <ruta> <numero_hilos> <palabra1> ...<palabra n> \n");
+
+		exit(1);
+
+	}
+	
 	char ** palabras = (char**)malloc(sizeof(char*)*(argc-3));
 	int * numpalabras = (int*)malloc(sizeof(int)*(argc-3));
 	char *ruta = argv[1];
