@@ -82,6 +82,7 @@ int main(int argc, char ** argv){
 	int numHilos = atoi(argv[2]);
 	int numLineas = numero_lineas(ruta,0);
 	int * numCaracteresXLinea = malloc(sizeof(int)*numLineas);
+
 	numero_lineas(ruta,numCaracteresXLinea);
 	int totPalabraas = 0;
 	
