@@ -113,11 +113,11 @@ int main(int argc, char ** argv){
 		FILE* fp=fopen(ruta,"r");//apertura de archivo
 		
 		fseek(fp, inicioParaElHilo,SEEK_SET); 
-		*(palabras+k) = malloc(divisionParaCadaHilo*sizeof(char));
+		*(parrafos+k) = malloc(divisionParaCadaHilo*sizeof(char));
 
 		for( int j = 0 ; j < divisionParaCadaHilo; j++){
 			char c = getc(fp);
-			*(*(palabras+k)+j) = c; 
+			*(*(parrafos+k)+j) = c; 
 		}      
 		inicioParaElHilo += divisionParaCadaHilo;
 
